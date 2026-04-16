@@ -1,0 +1,11 @@
+
+	
+	if( str_sub2cmd.find("txt into clip stay") == 0 )
+	{
+		//BD_MYLOG( "*-- page_butt ----**  " << str_sub2cmd << str_job );
+
+		txt_into_clip( str_text_main, str_text_sub );
+	}
+
+		
+

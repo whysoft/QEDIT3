@@ -1,0 +1,8 @@
+
+if( str_sub2cmd.find("add email sign") == 0 )
+{
+	 
+}
+
+		
+

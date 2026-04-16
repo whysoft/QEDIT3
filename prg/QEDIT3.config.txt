@@ -1,0 +1,7 @@
+
+# config 主要参数配置
+
+COM_PORT_WINDOWS  = com=6;start=1;stop=1;speed=9600;parity=N;datalen=8;timeoutsec=0.01;
+COM_PORT_LINUX    = com=ttyUSB0;start=1;stop=1;speed=9600;parity=N;datalen=8;timeoutsec=0.50;
+
+

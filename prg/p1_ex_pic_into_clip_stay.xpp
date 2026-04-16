@@ -1,0 +1,11 @@
+
+	
+	if( str_sub2cmd.find("pic into clip stay") == 0 )
+	{
+		//BD_MYLOG( "*-- aaaaaaaaaaa ----**  " << str_sub2cmd << str_job );
+		 
+		pic_into_clip( str_text_main, str_text_sub );
+	}
+
+		
+

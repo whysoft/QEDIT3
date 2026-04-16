@@ -1,0 +1,47 @@
+
+if( str_sub2cmd.find("distinct lines") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut;
+	std::vector< std::string > vecLines;  
+	std::vector< std::string > vecLines2;
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+	SStrf::sreplstr( str2, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+	WFile::Utf8toCh(str2); 
+
+	SStrf::strim(str1);
+	SStrf::strim(str2);
+
+	SStrvs::vsa_imp( str1, std::string("\n"), 0, vecLines ); 
+	
+	SSetu::vs_setgroup( vecLines, vecLines2 );
+
+	for(std::vector<std::string>::iterator it=vecLines2.begin();it!=vecLines2.end();++it)
+	{
+		sOut += *it;  
+		if(it!=vecLines2.end()-1) sOut += "\r\n";
+	}
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+		
+

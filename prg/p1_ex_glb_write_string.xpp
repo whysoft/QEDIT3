@@ -1,0 +1,31 @@
+
+if( str_sub2cmd.find("glb write string") == 0 )
+{
+	 
+}
+
+
+
+if( str_sub2cmd.find("glb read string") == 0 )
+{
+	 
+}
+
+
+
+
+if( str_sub2cmd.find("glb write file") == 0 )
+{
+	 
+}
+
+
+
+
+
+if( str_sub2cmd.find("glb read file") == 0 )
+{
+	 
+}
+
+

@@ -1,0 +1,271 @@
+﻿
+// 一段中文注释 
+ 
+//
+void txt_into_clip( std::string str1, std::string str2 )
+{
+	std::string strCmd;
+	int iCmd;
+	WFile fl;
+
+	fl.bind("TMPDATA/11.txt");
+	fl.write_str( str1 );
+
+	strCmd = "cat { | xclip -selection clipboard";
+	SStrf::sreplstr( strCmd, "{",  fl );
+	std::cout << strCmd << std::flush << std::endl; 
+	iCmd = WFile::run_exe( strCmd ); 
+
+	strCmd = "cat { | xclip -selection primary";
+	SStrf::sreplstr( strCmd, "{",  fl );
+	std::cout << strCmd << std::flush << std::endl; 
+	iCmd = WFile::run_exe( strCmd ); 
+
+	//strCmd = "python3 intoclip.py";
+	//std::cout << strCmd << std::flush << std::endl; 
+}
+
+
+
+//
+void pic_into_clip( std::string str1, std::string str2 )
+{
+	WFile::Utf8toCh(str1);
+
+	if( str1 == "" ) str1 = " ";
+
+	SimpPaper sp;
+	WFile fl;
+
+	fl.bind( WFile::MkDir2Path("TMPDATA") + "a.bmp");
+	 
+	SStrf::sucase(str2);
+
+	sp.AttachHZK( gfBINDDATA("ASC16"), str2=="F"?gfBINDDATA("HZK16F"):gfBINDDATA("HZK16") );
+	sp.m_foreColor = sp.MKRGB( 0x00, 0x2e, 0xe1 );
+	sp.Init( str1, 277 );
+	sp.SaveBmp( fl );
+
+	std::string strCmd;
+	int iCmd;
+
+    strCmd = "xclip -selection clipboard -t image/png {";
+	SStrf::sreplstr( strCmd, "{",  fl );
+	std::cout << strCmd << std::flush << std::endl; 
+
+	iCmd = WFile::run_exe( strCmd ); 
+}
+
+
+
+//
+void clip_append_to_end( std::string str_pagepathname, std::string str1, std::string str2 ) 
+{
+	std::string strCmd;
+	std::string strOut;
+	tbool rc;
+		
+	strCmd = "xclip -o";
+	
+	rc = WFile::get_shellpipe_output( strCmd, strOut );	
+	std::cout << "shellpipe_rc=" << rc << " output=" << strOut << std::endl;
+
+	if( str1 != "" ) str1 += "\r\n";
+	str1 += strOut;
+
+	WFile::Utf8toCh(str1); 
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 1 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, str1 ); 
+}
+
+
+
+
+//
+void clip_insert_to_begin( std::string str_pagepathname, std::string str1, std::string str2 ) 
+{
+	std::string strCmd;
+	std::string strOut;
+	tbool rc;
+		
+	strCmd = "xclip -o";
+	
+	rc = WFile::get_shellpipe_output( strCmd, strOut );
+	std::cout << "shellpipe_rc=" << rc << " output=" << strOut << std::endl;
+
+	if( strOut != "" ) strOut += "\r\n";
+	str1 = strOut + str1;
+
+	WFile::Utf8toCh(str1); 
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 0 );\n"
+		"}; \n"
+		"setTimeout( f2, 1 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, str1 ); 
+}
+
+
+
+//
+void undo_a( std::string str_pagepathname, std::string str1, std::string str2, std::vector< std::string > &vec_text_main_lot )
+{
+	std::string bs1;
+	std::string cs1;
+
+	vec_text_main_lot.insert( vec_text_main_lot.begin(), "" );
+	vec_text_main_lot.erase( vec_text_main_lot.end() - 1 );
+
+	bs1 = (*(vec_text_main_lot.rbegin())).c_str();
+	 
+	WFile::Utf8toCh(bs1); 
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, std::string(bs1) ); 
+}
+
+
+
+//
+void trim_a( std::string str_pagepathname, std::string str1, std::string str2 )
+{
+	std::vector< std::string > vecLines;  
+	std::string strMainText;
+ 
+	SStrf::sreplstr( str1, "\r", " "  );
+ 
+	SStrvs::vsa_imp( str1, std::string("\n"), 1, vecLines ); 
+
+	for(std::vector<std::string>::iterator it=vecLines.begin();it!=vecLines.end();++it)
+	{
+		SCake ckLine;
+
+		ckLine.lets( *it );
+		SStrf::strim(ckLine);
+ 
+		if(*ckLine)
+		{
+			strMainText += ckLine;
+
+			if(it!=vecLines.end()-1) strMainText += "\r\n";
+
+			std::cout << strMainText << std::endl;
+		}
+	}
+
+	WFile::Utf8toCh(strMainText); 
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+	
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, strMainText ); 
+}
+
+
+
+//
+void reverse_a( std::string str_pagepathname, std::string str1, std::string str2 )
+{
+	WFile::Utf8toCh(str1); 
+	WFile::Utf8toCh(str2); 
+
+	std::string sOut;
+
+	if( str2 != "" )
+	{
+		// 按字串分隔来reverse  
+		for( int i = (int)SStrvs::vsa_hm( str1, str2, 1 ) - 1 ; i >= 0; i-- )
+		{
+			sOut += SStrvs::vsa_get( str1, str2, 1, i );
+			sOut += str2;
+			sOut += "\r\n";
+		}
+	}
+	else
+	{
+		// 按每个字来reverse  
+		std::vector< std::string > vec1;
+
+		vec1 = gbstr_2_vec(str1);
+
+		std::reverse(vec1.begin(), vec1.end());
+
+		for( int i = 0 ; i < (int)vec1.size(); i++ )
+		{
+			sOut += vec1[i].c_str();
+		}
+	}
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+
+
+//
+void windows_os_relative( std::string str_sub2cmd, std::string str_pagepathname, std::string str1, std::string str2 )
+{
+	if( str_sub2cmd.find("list win") == 0 )
+	{
+		mybeep(); 
+	}
+	
+	if( str_sub2cmd.find("chg win title") == 0 )
+	{
+		mybeep(); 
+	}
+	
+	if( str_sub2cmd.find("send key") == 0 )
+	{
+		mybeep(); 
+	}
+}
+
+
+

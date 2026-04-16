@@ -1,0 +1,84 @@
+﻿
+/*  一段中文注释  */
+
+html{
+	overflow:auto;
+} 
+
+
+body{
+	background-color: white;
+}
+
+
+* {
+	//font-size: 19pt;
+	font-size: 1.01em;
+}
+
+
+hr {
+	height: 1px ;
+	background : #ccdd44; // 背景色，一般来说设置了高度之后背景色默认白色了，所以 
+	width: 100%;
+}
+
+.buttareahr {
+	height: 3px ;  
+	background : #ab2c6d; 
+	border: none; /* 移除默认的边框 */ 
+	width: 96%;
+	margin-left: 0;
+	margin-top: 1px; 
+	margin-bottom: 1px;
+}
+
+
+.buttareahr_green {
+	height: 2px ;  
+	background : #11FF22; 
+	color: #aa11aa;
+	border: none;  
+	width: 96%;
+	margin-left: 0;
+	margin-top: 1px; 
+	margin-bottom: 1px;
+}
+
+
+#div_time {
+	//font-size: 12pt;
+	//font-size: 0.7em;
+	//display:inline;
+	color: #448827;
+}
+
+#div_time2 { 
+	font-size: 0.9em;
+	display:inline;
+	color: #cc8827;
+}
+
+#div_label_sta {
+	font-size: 0.9em;
+	//display:inline;
+	color: #5566aa;
+}
+
+.button {
+	font-size: 0.9em;
+	display:inline; 
+    background-color: #aabbaa;
+    color: black;
+    padding: 2px 1px;      /* margin-top--margin-right--margin-bottom--margin-left，即“上-右-下-左”。  */ 
+    margin: 3px 3px;
+}
+
+.scrollable-cell {
+	overflow: auto;
+	height: 26em; /* 或者任何你需要的具体高度 */
+	width: 95%; /* 或者任何你需要的具体宽度 */
+	overflow-y: auto; /* 垂直滚动条 */ 
+}
+
+  

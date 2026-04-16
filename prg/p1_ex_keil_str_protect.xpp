@@ -1,0 +1,96 @@
+
+
+if( str_sub2cmd.find("keil str protect") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	//std::string sOut;   
+	tbool rc_processed(0);
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+	SStrf::sreplstr( str2, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+	WFile::Utf8toCh(str2); 
+
+	SStrf::strim(str1);
+	SStrf::strim(str2);
+
+
+	std::string strMainText;
+
+	strMainText = str1;
+
+	wl::SCake ck;
+	const unsigned char *p;
+	std::string ca = std::string(strMainText);
+
+	p = (const unsigned char *)(const char *)(SADDR(ca));
+
+	for( ; *p; p++ )
+	{
+		if( *p == 0xfd )
+		{
+			ck.redim( 3 * wl::SStrf::bs_ensize( SADDR(ca) ) );
+			wl::SStrf::bs_en( SADDR(ca), ck );
+
+			wl::SStrf::sreplch( ck.buf(), wl::SStrf::bs_esc(), '\x01' );
+
+			*wl::SStrf::splast( ck.buf(), 2 ) = 0;
+
+			std::string s1( ck.buf() );
+
+			wl::SStrf::sreplstr( s1, "\x01", "\\x" );
+
+			s1 = "\"" + s1 + "\"";
+			s1 += "\r\n // ";
+			s1 += std::string(strMainText);
+
+			std::string strDojs = 
+				"(function () \n"
+				"{ \n"
+				"var f2 = \n"
+				"function() \n"
+				"{ \n" 
+				"set_text_main_value( g_js_para, 1 );\n"
+				"}; \n"
+				"setTimeout( f2, 0 ); \n"
+				"})(); \n";
+
+			gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, s1 ); 
+
+			rc_processed = 1;
+			break;
+		}
+	}
+		
+	if( !rc_processed )
+	{
+		std::string s1;
+		
+		s1 = ca;
+		
+		s1 = "\"" + s1 + "\"";
+		s1 += "\r\n // ";
+		s1 += ca;
+
+		std::string strDojs = 
+			"(function () \n"
+			"{ \n"
+			"var f2 = \n"
+			"function() \n"
+			"{ \n" 
+			"set_text_main_value( g_js_para, 1 );\n"
+			"}; \n"
+			"setTimeout( f2, 0 ); \n"
+			"})(); \n";
+
+		gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, s1 ); 
+	}
+}
+
+	
+

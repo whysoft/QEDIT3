@@ -1,0 +1,228 @@
+
+if( str_sub2cmd.find("yyyymmdd.hhmmss") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut;  
+	wl::SDte dteNow;
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+
+	dteNow.MakeNow(); 
+
+	if(str1.length()>0) sOut = str1 + "\r\n";
+	sOut += dteNow.ReadStringPack().c_str();
+
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+		
+
+if( str_sub2cmd.find("yyyy-mm-dd") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut;   
+	wl::SDte dteNow;
+	char sz[99];
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+
+	dteNow.MakeNow(); 
+
+	sprintf( sz, "%d-%02d-%02d", dteNow.m_year,  dteNow.m_mon,  dteNow.m_day );
+
+	if(str1.length()>0) sOut = str1 + "\r\n";
+	sOut += sz;
+
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+		
+
+if( str_sub2cmd.find("hh:mm:ss") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut;   
+	wl::SDte dteNow;
+	char sz[99];
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+
+	dteNow.MakeNow(); 
+
+	sprintf( sz, "%02d:%02d:%02d", dteNow.m_hour,  dteNow.m_min,  dteNow.m_sec );
+
+	if(str1.length()>0) sOut = str1 + "\r\n";
+	sOut += sz;
+
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+
+
+
+if( str_sub2cmd.find("yyyy-mm-dd hh:mm:ss") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut;   
+	wl::SDte dteNow;
+	char sz[99];
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+
+	dteNow.MakeNow(); 
+
+	sprintf( sz, "%d-%02d-%02d %02d:%02d:%02d", dteNow.m_year,  dteNow.m_mon,  dteNow.m_day, dteNow.m_hour,  dteNow.m_min,  dteNow.m_sec );
+
+	if(str1.length()>0) sOut = str1 + "\r\n";
+	sOut += sz;
+
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+
+
+
+if( str_sub2cmd.find("dt to int") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut;    
+	wl::SDte dt;
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+	SStrf::strim(str1);
+
+	dt.Make( str1 );
+
+	sOut = wl::SStrf::sultoa( (long)dt.DiffSec(wl::SDte("1970-1-1")) );
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+
+
+if( str_sub2cmd.find("int to dt") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut;    
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+	SStrf::strim(str1);
+
+	wl::SDte dt("1970-1-1");
+
+	dt.RelativeSec( wl::SStrf::satol( str1 ) );
+	
+	sOut = dt.ReadString(); 
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+
+
+

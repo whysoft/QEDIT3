@@ -1,0 +1,87 @@
+
+if( str_sub2cmd.find("url encode") == 0 )
+{
+	std::string str1; 
+	std::string str2; 
+	std::string sOut;
+
+	str1 = str_text_main; 
+	str2 = str_text_sub;
+
+	SStrf::strim(str2);
+	SStrf::sucase(str2);
+
+	if( str2 == "U" )
+	{ // nop
+	}
+	else
+	{
+		WFile::Utf8toCh(str1);  
+	}
+
+	wl::SCake ckText;
+
+	ckText.redim( wl::SStrf::bs_ensize( str1.c_str() ) );
+	wl::SStrf::bs_en( str1.c_str(), ckText );
+
+	wl::SStrf::sreplch( ckText.buf(), wl::SStrf::bs_esc(), my_bs_esc() );
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, std::string(ckText.buf()) ); 
+}
+
+		
+
+if( str_sub2cmd.find("url decode") == 0 )
+{
+	std::string str1; 
+	std::string str2; 
+	std::string sOut;
+
+	str1 = str_text_main; 
+	str2 = str_text_sub;
+
+	SStrf::strim(str2);
+	SStrf::sucase(str2);
+
+	wl::SCake ckText;
+
+	ckText.lets( str1 );
+	wl::SStrf::bs_de( ckText, my_bs_esc );
+ 
+	sOut = ckText.buf();
+
+	if( str2 == "U" )
+	{
+		WFile::Utf8toCh(sOut);  
+	}
+	else
+	{ // nop
+	}
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+		
+

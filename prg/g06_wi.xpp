@@ -1,0 +1,428 @@
+﻿
+// 一段中文注释 
+
+//
+void txt_into_clip( std::string str1, std::string str2 )
+{
+	WFile::Utf8toCh(str1);
+
+	CString s = CString(str1.c_str()); 
+	_bstr_t b;
+
+	b = s;
+		//内容进贴板 
+	WClp::txt_put( std::string((char*)b) );
+}
+
+
+
+//
+void pic_into_clip( std::string str1, std::string str2 )
+{
+	WFile::Utf8toCh(str1);
+
+	if( str1 == "" ) str1 = " ";
+
+	_bstr_t bs;
+
+	bs = str1.c_str();
+ 
+	SimpPaper sp;
+	WFile fl;
+
+	fl.bind( WFile::MkDir2Path("TMPDATA") + "a.bmp");	//fl.bind("TMPDATA\\a.bmp");
+	
+	SStrf::sucase(str2);
+
+	sp.AttachHZK( gfBINDDATA("ASC16"), str2=="F"?gfBINDDATA("HZK16F"):gfBINDDATA("HZK16") );
+	sp.m_foreColor = sp.MKRGB( 0x00, 0x2e, 0xe1 );
+	sp.Init( (char*)bs, 277 );
+	sp.SaveBmp( fl );
+ 
+
+	//HBITMAP hBitmap;
+
+	//hBitmap=(HBITMAP)LoadImage( NULL, _T("d:\\a.bmp") , IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );  
+
+	//::OpenClipboard(NULL);
+	//::EmptyClipboard(); 
+
+	//::SetClipboardData(CF_BITMAP, hBitmap); 
+	//::CloseClipboard();
+
+
+	if (OpenClipboard(NULL)) 
+	{
+		EmptyClipboard();
+		HBITMAP hBitmap = (HBITMAP)LoadImage(NULL, _T("TMPDATA\\a.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		if (hBitmap) 
+		{
+			SetClipboardData(CF_BITMAP, hBitmap); // 系统接管，勿删 hBitmap
+			CloseClipboard();
+		}
+	}
+}
+
+
+
+//
+void clip_append_to_end( std::string str_pagepathname, std::string str1, std::string str2 )
+{
+	WFile::Utf8toCh(str1); 
+
+	_bstr_t bs1;
+
+	bs1 = str1.c_str();
+
+	CString s = (TCHAR*)bs1;
+	 
+	if(s.GetLength()>0) s += _T("\r\n");
+
+	_bstr_t b;
+
+	b = WClp::txt_get().c_str();
+
+	s += (TCHAR*)b;
+	b = s;
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 1 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, std::string((char*)b) ); 
+}
+
+
+
+//
+void clip_insert_to_begin( std::string str_pagepathname, std::string str1, std::string str2 )
+{
+	WFile::Utf8toCh(str1); 
+
+	_bstr_t bs1;
+
+	bs1 = str1.c_str();
+
+	CString cs1;
+	_bstr_t b;
+
+	b = WClp::txt_get().c_str();
+
+	cs1 = (TCHAR*)b;
+	if(cs1.GetLength()>0) cs1 += _T("\r\n");
+
+	cs1 += (TCHAR*)bs1;
+		
+	b = cs1;
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 0 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, std::string((char*)b) ); 
+}
+
+
+
+//
+void undo_a( std::string str_pagepathname, std::string str1, std::string str2, std::vector< std::string > &vec_text_main_lot )
+{
+	_bstr_t bs1;
+	CString cs1;
+
+	vec_text_main_lot.insert( vec_text_main_lot.begin(), "" );
+	vec_text_main_lot.erase( vec_text_main_lot.end() - 1 );
+
+	bs1 = (*(vec_text_main_lot.rbegin())).c_str();
+	cs1 = (TCHAR*)bs1;
+	bs1 = cs1;
+
+	str1 = (char*)bs1;
+	WFile::Utf8toCh(str1); 
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, str1 ); 
+}
+
+
+
+//
+void trim_a( std::string str_pagepathname, std::string str1, std::string str2 )
+{
+	WFile::Utf8toCh(str1); 
+
+	std::vector<CString> vecLines;
+	CString cstrMainText;
+	_bstr_t bs1;
+	CString cs1;
+	CString strMainText = _T("");
+
+	bs1 = str1.c_str(); 
+	cs1 = (TCHAR*)bs1;
+
+	cstrMainText = cs1;
+ 
+	cstrMainText.Replace( _T("\r"), _T(" ") );
+	WStrvs::vsa_imp( cstrMainText, CString("\n"), 1, vecLines );
+
+	for(std::vector<CString>::iterator it=vecLines.begin();it!=vecLines.end();++it)
+	{
+		SCake ckLine;
+		_bstr_t bs;
+
+		bs = *it;
+
+		ckLine.lets( (char*)bs );
+		SStrf::strim(ckLine);
+
+		bs = ckLine;
+		if(*ckLine)
+		{
+			strMainText += (TCHAR*)bs;
+
+			if(it!=vecLines.end()-1) strMainText += "\r\n";
+		}
+	}
+
+	bs1 = strMainText;
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, std::string((char*)bs1) ); 
+}
+
+
+
+//
+void reverse_a( std::string str_pagepathname, std::string str1, std::string str2 )
+{
+	WFile::Utf8toCh(str1); 
+	WFile::Utf8toCh(str2); 
+
+	CString strMainText;
+	CString strSub1Text;
+	_bstr_t bs1;
+	_bstr_t bs2;
+	_bstr_t bs3;
+	CString sOut;
+
+	bs1 = str1.c_str(); 
+	strMainText = (TCHAR*)bs1;
+
+	bs2 = str2.c_str(); 
+	strSub1Text = (TCHAR*)bs2;
+ 
+	if( strSub1Text.GetLength() == 0 )
+	{
+		// 按每个字来reverse  
+		for( int i = strMainText.GetLength() - 1 ; i >= 0; i-- )
+		{
+			sOut += strMainText[i];
+		}
+	}
+	else
+	{
+		// 按字串分隔来reverse   
+		for( int i = (int)WStrvs::vsa_hm( strMainText, strSub1Text, 1 ) - 1 ; i >= 0; i-- )
+		{
+			sOut += WStrvs::vsa_get( strMainText, strSub1Text, 1, i );
+			sOut += strSub1Text;
+			sOut += _T("\r\n");
+		}
+	}
+
+	bs3 = sOut;
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, std::string((char*)bs3) ); 
+}
+
+ 
+
+//
+void windows_os_relative( std::string str_sub2cmd, std::string str_pagepathname, std::string str1, std::string str2 )
+{
+	if( str_sub2cmd.find("list win") == 0 )
+	{
+		CString cstrMainText;
+		CString cstrSub1Text;
+		std::string strMainText;
+		std::string strSub1Text;
+		_bstr_t bs;
+
+		std::string strOutText;
+
+
+		//m_editMain.GetWindowText(cstrMainText);
+		SStrf::strim(str1);
+		bs = str1.c_str();
+		cstrMainText = (TCHAR*)bs;
+
+		//m_editSub1.GetWindowText(cstrSub1Text);
+		SStrf::strim(str2);
+		bs = str2.c_str();
+		cstrSub1Text = (TCHAR*)bs;
+
+
+		bs = cstrMainText;
+		strMainText = (char*)bs;
+		bs = cstrSub1Text;
+		strSub1Text = (char*)bs;
+
+		std::map< std::string , HWND > mapHdl;
+
+		wl::WMsg::snapshot( strSub1Text, mapHdl );
+
+		for( std::map< std::string , HWND >::iterator it= mapHdl.begin(); it != mapHdl.end(); ++it )
+		{
+			char ss[9923];
+			(*wl::SClib::p_sprintf()) ( ss, "%p \t%s\r\n", reinterpret_cast<HWND>(it->second), it->first.c_str() );
+			strOutText += ss;
+		}
+
+		bs = strOutText.c_str();
+		//cstrMainText = (LPCTSTR)bs;
+		//SetTextMainEdit( cstrMainText );
+	
+		std::string strDojs = 
+			"(function () \n"
+			"{ \n"
+			"var f2 = \n"
+			"function() \n"
+			"{ \n" 
+			"set_text_main_value( g_js_para, 1 );\n"
+			"}; \n"
+			"setTimeout( f2, 1 ); \n"
+			"})(); \n";
+
+		gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, std::string((char*)bs) ); 
+	}
+
+
+	if( str_sub2cmd.find("chg win title") == 0 )
+	{
+		CString cstrMainText;
+		CString cstrSub1Text;
+		std::string strMainText;
+		std::string strSub1Text;
+		_bstr_t bs;
+
+
+		//m_editMain.GetWindowText(cstrMainText);
+		//m_editSub1.GetWindowText(cstrSub1Text);
+
+		
+		//m_editMain.GetWindowText(cstrMainText);
+		SStrf::strim(str1);
+		bs = str1.c_str();
+		cstrMainText = (TCHAR*)bs;
+
+		//m_editSub1.GetWindowText(cstrSub1Text);
+		SStrf::strim(str2);
+		bs = str2.c_str();
+		cstrSub1Text = (TCHAR*)bs;
+
+
+		bs = cstrMainText;
+		strMainText = (char*)bs;
+		bs = cstrSub1Text;
+		strSub1Text = (char*)bs;
+		wl::SStrf::strim(strSub1Text);
+
+		if( !strSub1Text.empty() )
+			wl::WMsg::setwintext( strSub1Text, cstrMainText );
+	}
+
+
+	if( str_sub2cmd.find("send key") == 0 )
+	{
+		CString cstrMainText;
+		CString cstrSub1Text;
+		std::string strMainText; 
+		_bstr_t bs;
+
+
+		//m_editMain.GetWindowText(cstrMainText);
+		SStrf::strim(str1);
+		bs = str1.c_str();
+		cstrMainText = (TCHAR*)bs;
+
+		//m_editSub1.GetWindowText(cstrSub1Text);
+		SStrf::strim(str2);
+		bs = str2.c_str();
+		cstrSub1Text = (TCHAR*)bs;
+
+ 
+		CString strSub1Text;
+		int iCount = 0;
+
+		//m_editSub1.GetWindowText(strSub1Text);
+		strSub1Text = (TCHAR*)bs;
+
+		if( strSub1Text == _T("") )
+		{
+			iCount = 1; 
+		}
+		else
+		{
+			iCount = wl::SStrf::satol(CStringA(strSub1Text));
+		}
+
+		Sleep( 5555 );
+		mybeep(); 
+
+		for( int i = 0; i < iCount ; i++ )
+		{
+			wl::WMsg::key_ctrl( str1.c_str() );
+		}
+	}
+}
+
+
+
+
+
+

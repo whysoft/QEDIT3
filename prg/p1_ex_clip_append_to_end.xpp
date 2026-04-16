@@ -1,0 +1,11 @@
+
+	
+	if( str_sub2cmd.find("clip append to end") == 0 )
+	{
+		//BD_MYLOG( "*-- page_butt ----**  " << str_sub2cmd << str_job );
+
+		clip_append_to_end( this->m_my_pagepathname, str_text_main, str_text_sub );
+	}
+
+		
+

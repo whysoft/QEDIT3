@@ -1,0 +1,52 @@
+
+if( str_sub2cmd.find("get column") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut; 
+	std::string strPara1;  // 第1个参数是列数从0记。
+	int iPara1;
+	std::string strPara2;  // 第2个参数是分隔符 空代表TAB
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+	SStrf::sreplstr( str2, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+	WFile::Utf8toCh(str2); 
+
+	strPara1 = SStrvs::vsa_get( str2, std::string("\n"), 1, 0 );  
+	iPara1 = (int)SStrf::satol( strPara1 );
+
+	strPara2 = SStrvs::vsa_get( str2, std::string("\n"), 1, 1 );  
+	if( strPara2 == "" || strPara2=="<TAB>" ) strPara2="\t";
+	
+	for( int y = 0; y < (int)SStrvs::vsa_hm( str1, std::string("\n"), 0 ); y++ )
+	{
+		std::string strSourceLine;
+		
+		strSourceLine = wl::SStrvs::vsa_get( str1, std::string("\n"), 0, y );
+
+		sOut += SStrvs::vsa_get( strSourceLine, strPara2, 0, iPara1 ); 
+		sOut += "\r\n";
+		
+	}
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+		
+

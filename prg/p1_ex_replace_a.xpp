@@ -1,0 +1,49 @@
+
+if( str_sub2cmd.find("replace") == 0 )
+{
+	std::string str1;
+	std::string str2;
+	std::string str2_find;
+	std::string str2_to;
+	std::string sOut;
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+	SStrf::sreplstr( str2, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+	WFile::Utf8toCh(str2); 
+
+	//SStrf::strim(str1);
+	//SStrf::strim(str2);
+
+	str2_find = SStrvs::vsa_get( str2, std::string("\n"), 1, 0 ); 
+	if(str2_find=="<CR>") str2_find="\n";
+	if(str2_find=="<TAB>") str2_find="\t";
+
+	str2_to = SStrvs::vsa_get( str2, std::string("\n"), 1, 1 ); 
+	if(str2_to=="<CR>") str2_to="\n";
+	if(str2_to=="<TAB>") str2_to="\t";
+	
+	sOut = str1;
+	SStrf::sreplstr( sOut, str2_find, str2_to );
+	SStrf::sreplstr( sOut, "\n", "\r\n"  );
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+		
+

@@ -1,0 +1,69 @@
+
+if( str_sub2cmd.find("hint word") == 0 )
+{
+	std::string str1;
+	std::string str2;
+	std::vector< std::string > vec1;
+	std::vector< std::string > vec2;
+	std::string sOut;
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	WFile::Utf8toCh(str1); 
+	WFile::Utf8toCh(str2); 
+
+	SStrf::strim(str1);
+	SStrf::strim(str2);
+
+	vec1 = gbstr_2_vec(str1); 
+	vec2 = gbstr_2_vec(str2); 
+	
+	std::reverse(vec1.begin(), vec1.end());
+	std::reverse(vec2.begin(), vec2.end());
+
+	for( int i = 0 ; ; i++ )
+	{
+		if( i >= (int)vec1.size() && i >= (int)vec2.size() ) break;
+		
+		if( i < (int)vec1.size() && i < (int)vec2.size() )  
+		{
+			sOut += std::string(")") + std::string(vec2[i].c_str()) + std::string("(") + std::string(vec1[i].c_str());
+		}
+
+		if( i >= (int)vec1.size() && i < (int)vec2.size() )  
+		{
+			sOut += std::string(")") + std::string(vec2[i].c_str()) + std::string("(");
+		}
+
+		if( i < (int)vec1.size() && i >= (int)vec2.size() )  
+		{
+			sOut += std::string(vec1[i].c_str());
+		}
+	}
+
+	vec1 = gbstr_2_vec(sOut); 
+	std::reverse(vec1.begin(), vec1.end());
+	sOut = "";
+
+	for( int i = 0 ; i < (int)vec1.size(); i++ )
+	{
+		sOut += vec1[i].c_str();
+	}
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+		
+

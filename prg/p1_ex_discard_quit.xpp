@@ -1,0 +1,13 @@
+
+	
+	if( str_sub2cmd.find("discard quit") == 0 )
+	{
+		//BD_MYLOG( "*-- page_butt ----**  " << str_sub2cmd << str_job );
+
+		if(gp_d_uiproc) gp_d_uiproc->pr_end();
+		gp_cli_ter->clean_proc_env();
+		gp_cli_ter->do_ter_direct();
+	}
+
+		
+

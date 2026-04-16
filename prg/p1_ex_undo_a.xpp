@@ -1,0 +1,9 @@
+
+	
+	if( str_sub2cmd.find("undo") == 0 )
+	{
+		undo_a( this->m_my_pagepathname, str_text_main, str_text_sub, vec_text_main_lot );
+	}
+
+		
+

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<!--  一段中文注释 -->
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=gb2312"/>
+<meta  http-equiv="Expires"   content="0"/>
+<meta  http-equiv="Cache-Control"   content="no-cache"/>
+<meta  http-equiv="Pragma"   content="no-cache"/>
+<meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+       
+<!--##  css_style  #-->
+<link rel="stylesheet" type="text/css" href="a.css" />
+<!--###-->
+
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript" src="fingerprint.js"></script>
+<script type="text/javascript" src="commonuse.js"></script>
+<script type="text/javascript" src="commonuse2.js"></script>
+<script type="text/javascript" src="a.js"></script>
+
+<title>QEDIT3软件</title>
+
+</head>
+
+
+
+<!--
+<body oncontextmenu="return false;" oncopy="return false;" oncut="return false;" onselectstart="return false" ondragstart="return false" onload="bodyload()" >
+ -->   
+<body onload="bodyload()" >
+
+<!--##  some_name  #-->
+<!-- -->
+<!--###-->
+
+<!--##  session_token_finger  #-->
+<input id="a_s" type="text" value="use later" size="33">
+<input id="a_f" type="text" value="use later" size="33">
+<!--###-->
+
+
+
+<table border="1" cellpadding="6" cellspacing="1" width="100%" >
+
+	<tr>
+		<td align=left> 
+			<table border="0">
+				<tr>
+					<td >		
+						QEDIT3软件
+						<img src="a.png" width="44px" height="47px" style="vertical-align: middle;margin-left: 5px;">
+						<img src="_rotate.gif" width="44px" height="44px" style="vertical-align: middle;margin-left: 5px;">
+					</td>
+					<td >		
+						 <div id="div_time2">time2 </div> 
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	
+	<tr>
+		<td >
+			 <div id="div_label_sta"> label_sta aabb</div> 
+			 <div id="div_time"> now time</div> 
+		</td>
+	</tr>
+		
+</table>
+
+<hr />
+    
+     
+     
+<table border="1" cellpadding="1" cellspacing="1" width="98%" >
+
+	<tr>
+	
+		<td width="45%">
+			<textarea id="text_main" class="text_area" name="txt_" rows="20" style="width: 100%; box-sizing: border-box;"></textarea>
+		</td>
+		
+		<td width="25%">
+			<textarea id="text_sub" class="text_area" name="txt_" rows="20" style="width: 100%; box-sizing: border-box;"></textarea>	 
+		</td>
+		
+		<td width="30%"> 
+			<div class="scrollable-cell">
+				<input id="Button3" class="button" type="button" name="butt_AA" value="txt into clip quit|文进|ESC|F1" onclick="butt_a_submit(this)" />
+				<input id="Button4" class="button" type="button" name="butt_AA" value="pic into clip quit|图进|F4" onclick="butt_a_submit(this)" />
+				<input id="Button37" class="button" type="button" name="butt_AA" value="txt into clip stay" onclick="butt_a_submit(this)" />
+				<input id="Button38" class="button" type="button" name="butt_AA" value="pic into clip stay" onclick="butt_a_submit(this)" /> 
+				<br /> 
+				<input id="Button41" class="button" type="button" name="butt_AA" value="*clear|清空1|F2" onclick="clear_text1(this)" /> 
+				<input id="Button39" class="button" type="button" name="butt_AA" value="*clear|清空2|F3" onclick="clear_text2(this)" /> 
+				<input id="Button6" class="button" type="button" name="butt_AA"  value="*加回车" onclick="add_cr(this)" /> 
+				<br /> 
+				<input id="Button1" class="button" type="button" name="butt_AA" value="discard quit|退出" onclick="butt_a_submit(this)" />
+			<hr class="buttareahr" />
+			
+				<input id="Button7" class="button" type="button" name="butt_AA" value="clip append to end" onclick="butt_a_submit(this)" />
+				<input id="Button8" class="button" type="button" name="butt_AA" value="clip insert to begin" onclick="butt_a_submit(this)" />
+			<hr class="buttareahr" />
+			
+				<input id="Button9" class="button" type="button" name="butt_AA" value="undo" onclick="butt_a_submit(this)" />
+				<input id="Button10" class="button" type="button" name="butt_AA" value="trim" onclick="butt_a_submit(this)" />
+				<input id="Button11" class="button" type="button" name="butt_AA" value="reverse" onclick="butt_a_submit(this)" />
+				<input id="Button12" class="button" type="button" name="butt_AA" value="upper case" onclick="butt_a_submit(this)" />
+				<input id="Button13" class="button" type="button" name="butt_AA" value="lower case" onclick="butt_a_submit(this)" />
+				<br /> 
+				<input id="Button14" class="button" type="button" name="butt_AA" value="url encode" onclick="butt_a_submit(this)" />
+				<input id="Button2" class="button" type="button" name="butt_AA" value="url decode" onclick="butt_a_submit(this)" />
+				<input id="Button23" class="button" type="button" name="butt_AA" value="make DEF name" onclick="butt_a_submit(this)" />
+				<input id="Button27" class="button" type="button" name="butt_AA" value="keil str protect" onclick="butt_a_submit(this)" />
+				<input id="Button26" class="button" type="button" name="butt_AA" value="select the file" onclick="butt_a_submit(this)" />
+			<hr class="buttareahr" />
+			
+				<input id="Button16" class="button" type="button" name="butt_AA" value="replace" onclick="butt_a_submit(this)" />
+				<input id="Button17" class="button" type="button" name="butt_AA" value="add head tail" onclick="butt_a_submit(this)" />
+				<input id="Button18" class="button" type="button" name="butt_AA" value="one line use trim" onclick="butt_a_submit(this)" />
+				<input id="Button19" class="button" type="button" name="butt_AA" value="one line use join" onclick="butt_a_submit(this)" />
+				<input id="Button20" class="button" type="button" name="butt_AA" value="distinct lines" onclick="butt_a_submit(this)" />
+				<input id="Button21" class="button" type="button" name="butt_AA" value="get column" onclick="butt_a_submit(this)" />
+				<br /> 
+				<input id="Button40" class="button" type="button" name="butt_AA" value="hint word|括号词" onclick="butt_a_submit(this)" />
+			<hr class="buttareahr" />
+			
+				<input id="Button28" class="button" type="button" name="butt_AA" value="yyyymmdd.hhmmss" onclick="butt_a_submit(this)" />
+				<input id="Button29" class="button" type="button" name="butt_AA" value="yyyy-mm-dd" onclick="butt_a_submit(this)" />
+				<input id="Button30" class="button" type="button" name="butt_AA" value="hh:mm:ss" onclick="butt_a_submit(this)" />
+				<input id="Button31" class="button" type="button" name="butt_AA" value="yyyy-mm-dd hh:mm:ss" onclick="butt_a_submit(this)" />
+				<input id="Button32" class="button" type="button" name="butt_AA" value="dt to int" onclick="butt_a_submit(this)" />
+				<input id="Button33" class="button" type="button" name="butt_AA" value="int to dt" onclick="butt_a_submit(this)" />
+			<hr class="buttareahr_green" />
+			<hr class="buttareahr_green" />
+			
+				<input id="Button24" class="button" type="button" name="butt_WW" value="list win" onclick="butt_a_submit(this)" />
+				<input id="Button25" class="button" type="button" name="butt_WW" value="chg win title" onclick="butt_a_submit(this)" />
+				<input id="Button22" class="button" type="button" name="butt_WW" value="send key" onclick="butt_a_submit(this)" />
+			<hr class="buttareahr" />
+			
+<!--##  session_private_zone  #-->
+<!-- -->
+				<input id="Button35" class="button" type="button" name="butt_AA" value="glb read string|读串" onclick="butt_a_submit(this)" />
+				<input id="Button5" class="button" type="button" name="butt_AA" value="glb write string" onclick="butt_a_submit(this)" />
+				<input id="Button15" class="button" type="button" name="butt_AA" value="glb read file|读文" onclick="butt_a_submit(this)" />
+				<input id="Button36" class="button" type="button" name="butt_AA" value="glb write file" onclick="butt_a_submit(this)" />
+			<hr class="buttareahr" />
+			
+				<input id="Button42" class="button" type="button" name="butt_AA" value="add email sign" onclick="butt_a_submit(this)" />
+				<input id="Button34" class="button" type="button" name="butt_AA" value="many ref" onclick="butt_a_submit(this)" />
+<!--###-->
+
+			</div>
+			
+		</td>
+		
+	</tr>
+		
+</table>
+
+ 
+<p /> <br /> 
+<hr />
+
+
+</body>
+</html>
+
+

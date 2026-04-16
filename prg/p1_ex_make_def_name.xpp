@@ -1,0 +1,78 @@
+
+if( str_sub2cmd.find("make DEF name") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut;  
+	char *p;
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+
+	WFile::Utf8toCh(str1); 
+
+	wl::SStrf::sucase( str1 );
+	p = SADDR(str1);
+
+	for( int i = 0; i < (int)str1.length(); i++ ) 
+	{
+		do //fake do
+		{
+			if( p[i] >= 'A' && p[i] <= 'Z' || p[i] == ' ' )
+			{
+				// flow down
+			}
+			
+			if( i != 0 && p[i] >= '0' && p[i] <= '9' && p[i-1] >= 'A' && p[i-1] <= 'Z' )
+			{
+				// flow down
+			}
+
+			if( p[i] >= 'A' && p[i] <= 'Z' )
+			{
+				break;
+			}
+
+			if( p[i] >= '0' && p[i] <= '9' )
+			{
+				break;
+			}
+
+            p[i] = '/';
+			
+		}while(0);
+	}
+
+	std::vector<std::string> vecWords;
+	std::vector<std::string>::iterator it; 
+
+	wl::SStrvs::vsa_imp( std::string(p), std::string("/"), 1, vecWords );
+
+	for( it = vecWords.begin(); it != vecWords.end(); ++it )
+	{
+		sOut += it->c_str();
+		sOut += "_";
+	}
+
+	SStrf::sreplstr( sOut, " ", ""  );
+	SStrf::strim( sOut, "_" );
+
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, sOut ); 
+}
+
+		
+

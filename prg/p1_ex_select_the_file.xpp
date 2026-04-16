@@ -1,0 +1,55 @@
+
+if( str_sub2cmd.find("select the file") == 0 )
+{
+	std::string str1;
+	std::string str2; 
+	std::string sOut; 
+	std::string strCmd; 
+	int iCmdrc(999);
+
+	str1 = str_text_main;
+	str2 = str_text_sub;
+
+	SStrf::sreplstr( str1, "\r", ""  );
+
+	if( IsOsWin() )
+	{
+		WFile::Utf8toCh(str1); 
+		SStrf::strim(str1);
+		sOut = str1;
+
+		if( sOut == "" ) sOut = "TMPDATA\\.";
+
+		SStrf::strim(sOut,"\"");
+		sOut = "\"" + sOut + "\"";
+
+		strCmd =  "explorer /select, " + sOut; 
+
+		iCmdrc = WFile::run_exe(strCmd);
+		//mybeep( iCmdrc ); 
+	}
+	else
+	{
+		//WFile::Utf8toCh(str1); 
+		SStrf::strim(str1);
+		sOut = str1;
+
+		if( sOut == "" ) sOut = "TMPDATA";
+
+		SStrf::strim(sOut,"\"");
+		sOut = "\"" + sOut + "\"";
+
+		if( str2 == "" )
+		{
+			strCmd =  "nautilus " + sOut + "&"; 
+		}
+		else
+		{
+			strCmd =  "nemo " + sOut + "&"; 
+		}
+
+		iCmdrc = WFile::run_exe(strCmd);
+		//mybeep( iCmdrc ); 
+	}
+}
+

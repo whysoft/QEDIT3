@@ -1,0 +1,55 @@
+
+if( str_sub2cmd.find("upper case") == 0 )
+{
+	std::string str1; 
+	std::string sOut;
+
+	str1 = str_text_main; 
+
+	WFile::Utf8toCh(str1); 
+  
+	SStrf::sucase(str1);
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, str1 ); 
+}
+
+		
+
+if( str_sub2cmd.find("lower case") == 0 )
+{
+	std::string str1; 
+	std::string sOut;
+
+	str1 = str_text_main; 
+
+	WFile::Utf8toCh(str1); 
+  
+	SStrf::slcase(str1);
+
+	std::string strDojs = 
+		"(function () \n"
+		"{ \n"
+		"var f2 = \n"
+		"function() \n"
+		"{ \n" 
+		"set_text_main_value( g_js_para, 1 );\n"
+		"}; \n"
+		"setTimeout( f2, 0 ); \n"
+		"})(); \n";
+
+	gp_d_ui_mngr->um_page_paint_update( str_pagepathname, strDojs, str1 ); 
+}
+
+		
+
