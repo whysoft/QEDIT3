@@ -75,10 +75,16 @@ hr {
 }
 
 .scrollable-cell {
+	//height: 100%; 
+	//width: 100%;
+	height: 27em; /* 或者任何你需要的具体高度 */
+	//width: 95%; /* 或者任何你需要的具体宽度 */ 
 	overflow: auto;
-	height: 26em; /* 或者任何你需要的具体高度 */
-	width: 95%; /* 或者任何你需要的具体宽度 */
 	overflow-y: auto; /* 垂直滚动条 */ 
+}
+
+.text_area:focus {
+	border: 2px solid #FF1100; /* 添加自定义的边框颜色和宽度 */ 
 }
 
   

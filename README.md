@@ -4,15 +4,19 @@ https://github.com/whysoft/QEDIT3
 <br>
 特点是敏捷、简易。
 <br>
-使用了LIB123库，并演示了一种界面编写的方法。
+使用了LIB123库，并演示了一种界面与业务逻辑分离的编程方法。
 <br>
 
 ## 编译和使用方法
 在windows下，用vs 2005及以上，打开并编译。
 需要注意的是，生成的EXE文件在Debug或Release目录下，需要拷到父目录下，使之与webres目录平级。
 最好是生成一个桌面快捷方式并设定为最小化运行。它运行时会另外再起一个界面进程。界面关闭它也会随之退出。
-在linux下，直接make。编译后的目标文件已经与webres目录平级。然后需要安装以下支持包:<br>
+<br>
+在linux下(ubuntu)直接make。编译后的目标文件已经与webres目录平级。然后需要安装以下支持包:
+<br>
 sudo apt-get install python3-pyqt5 python3-pyqt5.qtwebengine xclip
+<br>
+在webres目录中有两个版本的界面，分别为横和竖的排版方式。只要更换html文件即可更换界面，而业务逻辑不受影响。
 
 ## 主要功能描述：
 * 没有存盘功能
