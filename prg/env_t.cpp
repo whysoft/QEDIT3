@@ -17,7 +17,8 @@ env_t::env_t()
 	m_strHelp = "hello hello QEDIT3 help.";
 	m_strMainThrdId = WThrd::tr_GetCurrentThreadId();
 
-	this->m_service_port = 8066 + (int)( 22 * SStrf::rand1() );
+	SStrf::initrand();
+	this->m_service_port = 8066 + (int)( 33 * SStrf::rand1() );
 }
 
 

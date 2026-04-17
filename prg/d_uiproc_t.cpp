@@ -167,8 +167,8 @@ tbool d_uiproc_t::pr_install()
 	std::cout << strCmd << std::flush << std::endl; 
 	rc = WFile::run_exe( strCmd );
 	
-	std::cout << "pyqt5 required. use the following command:"  << std::flush << std::endl; 
-	std::cout << "sudo apt-get install python3-pyqt5 python3-pyqt5.qtwebengine"  << std::flush << std::endl; 
+	std::cout << "pyqt5 and xclip required. use the following command:"  << std::flush << std::endl; 
+	std::cout << "sudo apt-get install python3-pyqt5 python3-pyqt5.qtwebengine xclip"  << std::flush << std::endl; 
 
 	return 1;
 }
